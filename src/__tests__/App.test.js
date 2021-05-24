@@ -1,13 +1,16 @@
 import "@testing-library/jest-dom/extend-expect";
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import App from "../App";
 
 test("AG Grid renders the table", async () => {
-  const { container } = render(<App />);
+  const { container, getByText } = render(<App />);
 
-  // the test only passes if we wait a bit
-  await new Promise((r) => setTimeout(r, 1000));
+  // test does not pass if we only wait for the firstDataRendered event to be fired:
+  await waitFor(() => expect(getByText("rendered")).toBeInTheDocument());
+
+  // the test only passes if we wait as follows:
+  // await new Promise((r) => setTimeout(r, 3000));
 
   // run an expectation on what the DOM looks like
   expect(container).toMatchInlineSnapshot(`
@@ -16,6 +19,9 @@ test("AG Grid renders the table", async () => {
         class="ag-theme-alpine"
         style="height: 400px; width: 600px;"
       >
+        <p>
+          rendered
+        </p>
         <div
           style="height: 100%;"
         >
@@ -40,7 +46,7 @@ test("AG Grid renders the table", async () => {
               <!--AG-GRID-COMP-->
               <div
                 aria-colcount="3"
-                aria-rowcount="4"
+                aria-rowcount="10"
                 class="ag-root ag-unselectable ag-layout-normal"
                 ref="gridPanel"
                 role="grid"
@@ -505,7 +511,7 @@ test("AG Grid renders the table", async () => {
                     class="ag-pinned-left-cols-container ag-hidden"
                     ref="eLeftContainer"
                     role="presentation"
-                    style="height: 126px;"
+                    style="height: 378px;"
                     unselectable="on"
                   >
                     <div
@@ -531,12 +537,72 @@ test("AG Grid renders the table", async () => {
                     <div
                       aria-label="Press SPACE to select this row."
                       aria-rowindex="4"
-                      class="ag-row ag-row-no-focus ag-row-even ag-row-level-0 ag-row-position-absolute ag-row-last"
+                      class="ag-row ag-row-no-focus ag-row-even ag-row-level-0 ag-row-position-absolute"
                       comp-id="25"
                       role="row"
                       row-id="2"
                       row-index="2"
                       style="height: 42px; transform: translateY(84px); "
+                    />
+                    <div
+                      aria-label="Press SPACE to select this row."
+                      aria-rowindex="5"
+                      class="ag-row ag-row-no-focus ag-row-odd ag-row-level-0 ag-row-position-absolute"
+                      comp-id="29"
+                      role="row"
+                      row-id="3"
+                      row-index="3"
+                      style="height: 42px; transform: translateY(126px); "
+                    />
+                    <div
+                      aria-label="Press SPACE to select this row."
+                      aria-rowindex="6"
+                      class="ag-row ag-row-no-focus ag-row-even ag-row-level-0 ag-row-position-absolute"
+                      comp-id="33"
+                      role="row"
+                      row-id="4"
+                      row-index="4"
+                      style="height: 42px; transform: translateY(168px); "
+                    />
+                    <div
+                      aria-label="Press SPACE to select this row."
+                      aria-rowindex="7"
+                      class="ag-row ag-row-no-focus ag-row-odd ag-row-level-0 ag-row-position-absolute"
+                      comp-id="37"
+                      role="row"
+                      row-id="5"
+                      row-index="5"
+                      style="height: 42px; transform: translateY(210px); "
+                    />
+                    <div
+                      aria-label="Press SPACE to select this row."
+                      aria-rowindex="8"
+                      class="ag-row ag-row-no-focus ag-row-even ag-row-level-0 ag-row-position-absolute"
+                      comp-id="41"
+                      role="row"
+                      row-id="6"
+                      row-index="6"
+                      style="height: 42px; transform: translateY(252px); "
+                    />
+                    <div
+                      aria-label="Press SPACE to select this row."
+                      aria-rowindex="9"
+                      class="ag-row ag-row-no-focus ag-row-odd ag-row-level-0 ag-row-position-absolute"
+                      comp-id="45"
+                      role="row"
+                      row-id="7"
+                      row-index="7"
+                      style="height: 42px; transform: translateY(294px); "
+                    />
+                    <div
+                      aria-label="Press SPACE to select this row."
+                      aria-rowindex="10"
+                      class="ag-row ag-row-no-focus ag-row-even ag-row-level-0 ag-row-position-absolute ag-row-last"
+                      comp-id="49"
+                      role="row"
+                      row-id="8"
+                      row-index="8"
+                      style="height: 42px; transform: translateY(336px); "
                     />
                   </div>
                   
@@ -545,7 +611,7 @@ test("AG Grid renders the table", async () => {
                     class="ag-center-cols-clipper"
                     ref="eCenterColsClipper"
                     role="presentation"
-                    style="height: 126px;"
+                    style="height: 378px;"
                     unselectable="on"
                   >
                     
@@ -562,7 +628,7 @@ test("AG Grid renders the table", async () => {
                         class="ag-center-cols-container"
                         ref="eCenterContainer"
                         role="rowgroup"
-                        style="width: 600px; height: 126px;"
+                        style="width: 600px; height: 378px;"
                         unselectable="on"
                       >
                         <div
@@ -676,7 +742,7 @@ test("AG Grid renders the table", async () => {
                         <div
                           aria-label="Press SPACE to select this row."
                           aria-rowindex="4"
-                          class="ag-row ag-row-no-focus ag-row-even ag-row-level-0 ag-row-position-absolute ag-row-last"
+                          class="ag-row ag-row-no-focus ag-row-even ag-row-level-0 ag-row-position-absolute"
                           comp-id="25"
                           role="row"
                           row-id="2"
@@ -727,6 +793,330 @@ test("AG Grid renders the table", async () => {
                             </div>
                           </div>
                         </div>
+                        <div
+                          aria-label="Press SPACE to select this row."
+                          aria-rowindex="5"
+                          class="ag-row ag-row-no-focus ag-row-odd ag-row-level-0 ag-row-position-absolute"
+                          comp-id="29"
+                          role="row"
+                          row-id="3"
+                          row-index="3"
+                          style="height: 42px; transform: translateY(126px); "
+                        >
+                          <div
+                            aria-colindex="1"
+                            class="ag-cell ag-cell-not-inline-editing ag-cell-auto-height ag-cell-value"
+                            col-id="make"
+                            comp-id="30"
+                            role="gridcell"
+                            style="width: 200px; left: 0px;  "
+                            tabindex="-1"
+                            unselectable="on"
+                          >
+                            Toyota
+                          </div>
+                          <div
+                            aria-colindex="2"
+                            class="ag-cell ag-cell-not-inline-editing ag-cell-auto-height ag-cell-value"
+                            col-id="model"
+                            comp-id="31"
+                            role="gridcell"
+                            style="width: 200px; left: 200px;  "
+                            tabindex="-1"
+                            unselectable="on"
+                          >
+                            Celica
+                          </div>
+                          <div
+                            aria-colindex="3"
+                            class="ag-cell ag-cell-not-inline-editing ag-cell-auto-height ag-cell-value"
+                            col-id="price"
+                            comp-id="32"
+                            role="gridcell"
+                            style="width: 200px; left: 400px;  "
+                            tabindex="-1"
+                            unselectable="on"
+                          >
+                            <div
+                              class="ag-react-container"
+                            >
+                              <div>
+                                This is the price: 
+                                35000
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          aria-label="Press SPACE to select this row."
+                          aria-rowindex="6"
+                          class="ag-row ag-row-no-focus ag-row-even ag-row-level-0 ag-row-position-absolute"
+                          comp-id="33"
+                          role="row"
+                          row-id="4"
+                          row-index="4"
+                          style="height: 42px; transform: translateY(168px); "
+                        >
+                          <div
+                            aria-colindex="1"
+                            class="ag-cell ag-cell-not-inline-editing ag-cell-auto-height ag-cell-value"
+                            col-id="make"
+                            comp-id="34"
+                            role="gridcell"
+                            style="width: 200px; left: 0px;  "
+                            tabindex="-1"
+                            unselectable="on"
+                          >
+                            Ford
+                          </div>
+                          <div
+                            aria-colindex="2"
+                            class="ag-cell ag-cell-not-inline-editing ag-cell-auto-height ag-cell-value"
+                            col-id="model"
+                            comp-id="35"
+                            role="gridcell"
+                            style="width: 200px; left: 200px;  "
+                            tabindex="-1"
+                            unselectable="on"
+                          >
+                            Mondeo
+                          </div>
+                          <div
+                            aria-colindex="3"
+                            class="ag-cell ag-cell-not-inline-editing ag-cell-auto-height ag-cell-value"
+                            col-id="price"
+                            comp-id="36"
+                            role="gridcell"
+                            style="width: 200px; left: 400px;  "
+                            tabindex="-1"
+                            unselectable="on"
+                          >
+                            <div
+                              class="ag-react-container"
+                            >
+                              <div>
+                                This is the price: 
+                                32000
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          aria-label="Press SPACE to select this row."
+                          aria-rowindex="7"
+                          class="ag-row ag-row-no-focus ag-row-odd ag-row-level-0 ag-row-position-absolute"
+                          comp-id="37"
+                          role="row"
+                          row-id="5"
+                          row-index="5"
+                          style="height: 42px; transform: translateY(210px); "
+                        >
+                          <div
+                            aria-colindex="1"
+                            class="ag-cell ag-cell-not-inline-editing ag-cell-auto-height ag-cell-value"
+                            col-id="make"
+                            comp-id="38"
+                            role="gridcell"
+                            style="width: 200px; left: 0px;  "
+                            tabindex="-1"
+                            unselectable="on"
+                          >
+                            Porsche
+                          </div>
+                          <div
+                            aria-colindex="2"
+                            class="ag-cell ag-cell-not-inline-editing ag-cell-auto-height ag-cell-value"
+                            col-id="model"
+                            comp-id="39"
+                            role="gridcell"
+                            style="width: 200px; left: 200px;  "
+                            tabindex="-1"
+                            unselectable="on"
+                          >
+                            Boxter
+                          </div>
+                          <div
+                            aria-colindex="3"
+                            class="ag-cell ag-cell-not-inline-editing ag-cell-auto-height ag-cell-value"
+                            col-id="price"
+                            comp-id="40"
+                            role="gridcell"
+                            style="width: 200px; left: 400px;  "
+                            tabindex="-1"
+                            unselectable="on"
+                          >
+                            <div
+                              class="ag-react-container"
+                            >
+                              <div>
+                                This is the price: 
+                                72000
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          aria-label="Press SPACE to select this row."
+                          aria-rowindex="8"
+                          class="ag-row ag-row-no-focus ag-row-even ag-row-level-0 ag-row-position-absolute"
+                          comp-id="41"
+                          role="row"
+                          row-id="6"
+                          row-index="6"
+                          style="height: 42px; transform: translateY(252px); "
+                        >
+                          <div
+                            aria-colindex="1"
+                            class="ag-cell ag-cell-not-inline-editing ag-cell-auto-height ag-cell-value"
+                            col-id="make"
+                            comp-id="42"
+                            role="gridcell"
+                            style="width: 200px; left: 0px;  "
+                            tabindex="-1"
+                            unselectable="on"
+                          >
+                            Toyota
+                          </div>
+                          <div
+                            aria-colindex="2"
+                            class="ag-cell ag-cell-not-inline-editing ag-cell-auto-height ag-cell-value"
+                            col-id="model"
+                            comp-id="43"
+                            role="gridcell"
+                            style="width: 200px; left: 200px;  "
+                            tabindex="-1"
+                            unselectable="on"
+                          >
+                            Celica
+                          </div>
+                          <div
+                            aria-colindex="3"
+                            class="ag-cell ag-cell-not-inline-editing ag-cell-auto-height ag-cell-value"
+                            col-id="price"
+                            comp-id="44"
+                            role="gridcell"
+                            style="width: 200px; left: 400px;  "
+                            tabindex="-1"
+                            unselectable="on"
+                          >
+                            <div
+                              class="ag-react-container"
+                            >
+                              <div>
+                                This is the price: 
+                                35000
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          aria-label="Press SPACE to select this row."
+                          aria-rowindex="9"
+                          class="ag-row ag-row-no-focus ag-row-odd ag-row-level-0 ag-row-position-absolute"
+                          comp-id="45"
+                          role="row"
+                          row-id="7"
+                          row-index="7"
+                          style="height: 42px; transform: translateY(294px); "
+                        >
+                          <div
+                            aria-colindex="1"
+                            class="ag-cell ag-cell-not-inline-editing ag-cell-auto-height ag-cell-value"
+                            col-id="make"
+                            comp-id="46"
+                            role="gridcell"
+                            style="width: 200px; left: 0px;  "
+                            tabindex="-1"
+                            unselectable="on"
+                          >
+                            Ford
+                          </div>
+                          <div
+                            aria-colindex="2"
+                            class="ag-cell ag-cell-not-inline-editing ag-cell-auto-height ag-cell-value"
+                            col-id="model"
+                            comp-id="47"
+                            role="gridcell"
+                            style="width: 200px; left: 200px;  "
+                            tabindex="-1"
+                            unselectable="on"
+                          >
+                            Mondeo
+                          </div>
+                          <div
+                            aria-colindex="3"
+                            class="ag-cell ag-cell-not-inline-editing ag-cell-auto-height ag-cell-value"
+                            col-id="price"
+                            comp-id="48"
+                            role="gridcell"
+                            style="width: 200px; left: 400px;  "
+                            tabindex="-1"
+                            unselectable="on"
+                          >
+                            <div
+                              class="ag-react-container"
+                            >
+                              <div>
+                                This is the price: 
+                                32000
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          aria-label="Press SPACE to select this row."
+                          aria-rowindex="10"
+                          class="ag-row ag-row-no-focus ag-row-even ag-row-level-0 ag-row-position-absolute ag-row-last"
+                          comp-id="49"
+                          role="row"
+                          row-id="8"
+                          row-index="8"
+                          style="height: 42px; transform: translateY(336px); "
+                        >
+                          <div
+                            aria-colindex="1"
+                            class="ag-cell ag-cell-not-inline-editing ag-cell-auto-height ag-cell-value"
+                            col-id="make"
+                            comp-id="50"
+                            role="gridcell"
+                            style="width: 200px; left: 0px;  "
+                            tabindex="-1"
+                            unselectable="on"
+                          >
+                            Porsche
+                          </div>
+                          <div
+                            aria-colindex="2"
+                            class="ag-cell ag-cell-not-inline-editing ag-cell-auto-height ag-cell-value"
+                            col-id="model"
+                            comp-id="51"
+                            role="gridcell"
+                            style="width: 200px; left: 200px;  "
+                            tabindex="-1"
+                            unselectable="on"
+                          >
+                            Boxter
+                          </div>
+                          <div
+                            aria-colindex="3"
+                            class="ag-cell ag-cell-not-inline-editing ag-cell-auto-height ag-cell-value"
+                            col-id="price"
+                            comp-id="52"
+                            role="gridcell"
+                            style="width: 200px; left: 400px;  "
+                            tabindex="-1"
+                            unselectable="on"
+                          >
+                            <div
+                              class="ag-react-container"
+                            >
+                              <div>
+                                This is the price: 
+                                72000
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                       
                     
@@ -740,7 +1130,7 @@ test("AG Grid renders the table", async () => {
                     class="ag-pinned-right-cols-container ag-hidden"
                     ref="eRightContainer"
                     role="presentation"
-                    style="height: 126px;"
+                    style="height: 378px;"
                     unselectable="on"
                   >
                     <div
@@ -766,12 +1156,72 @@ test("AG Grid renders the table", async () => {
                     <div
                       aria-label="Press SPACE to select this row."
                       aria-rowindex="4"
-                      class="ag-row ag-row-no-focus ag-row-even ag-row-level-0 ag-row-position-absolute ag-row-last"
+                      class="ag-row ag-row-no-focus ag-row-even ag-row-level-0 ag-row-position-absolute"
                       comp-id="25"
                       role="row"
                       row-id="2"
                       row-index="2"
                       style="height: 42px; transform: translateY(84px); "
+                    />
+                    <div
+                      aria-label="Press SPACE to select this row."
+                      aria-rowindex="5"
+                      class="ag-row ag-row-no-focus ag-row-odd ag-row-level-0 ag-row-position-absolute"
+                      comp-id="29"
+                      role="row"
+                      row-id="3"
+                      row-index="3"
+                      style="height: 42px; transform: translateY(126px); "
+                    />
+                    <div
+                      aria-label="Press SPACE to select this row."
+                      aria-rowindex="6"
+                      class="ag-row ag-row-no-focus ag-row-even ag-row-level-0 ag-row-position-absolute"
+                      comp-id="33"
+                      role="row"
+                      row-id="4"
+                      row-index="4"
+                      style="height: 42px; transform: translateY(168px); "
+                    />
+                    <div
+                      aria-label="Press SPACE to select this row."
+                      aria-rowindex="7"
+                      class="ag-row ag-row-no-focus ag-row-odd ag-row-level-0 ag-row-position-absolute"
+                      comp-id="37"
+                      role="row"
+                      row-id="5"
+                      row-index="5"
+                      style="height: 42px; transform: translateY(210px); "
+                    />
+                    <div
+                      aria-label="Press SPACE to select this row."
+                      aria-rowindex="8"
+                      class="ag-row ag-row-no-focus ag-row-even ag-row-level-0 ag-row-position-absolute"
+                      comp-id="41"
+                      role="row"
+                      row-id="6"
+                      row-index="6"
+                      style="height: 42px; transform: translateY(252px); "
+                    />
+                    <div
+                      aria-label="Press SPACE to select this row."
+                      aria-rowindex="9"
+                      class="ag-row ag-row-no-focus ag-row-odd ag-row-level-0 ag-row-position-absolute"
+                      comp-id="45"
+                      role="row"
+                      row-id="7"
+                      row-index="7"
+                      style="height: 42px; transform: translateY(294px); "
+                    />
+                    <div
+                      aria-label="Press SPACE to select this row."
+                      aria-rowindex="10"
+                      class="ag-row ag-row-no-focus ag-row-even ag-row-level-0 ag-row-position-absolute ag-row-last"
+                      comp-id="49"
+                      role="row"
+                      row-id="8"
+                      row-index="8"
+                      style="height: 42px; transform: translateY(336px); "
                     />
                   </div>
                   
@@ -780,7 +1230,7 @@ test("AG Grid renders the table", async () => {
                     class="ag-full-width-container"
                     ref="eFullWidthContainer"
                     role="presentation"
-                    style="height: 126px;"
+                    style="height: 378px;"
                     unselectable="on"
                   />
                   
